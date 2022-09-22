@@ -1,0 +1,14 @@
+type CarModel @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  activelysold: Boolean
+  carmakeID: ID! @index(name: "byCarMake")
+}
+
+type CarMake @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  startyear: Int
+  CarModels: [CarModel] @hasMany(indexName: "byCarMake", fields: ["id"])
+}
+ 

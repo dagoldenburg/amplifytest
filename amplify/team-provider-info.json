@@ -1,0 +1,26 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-testtest-staging-121418-authRole",
+      "UnauthRoleArn": "arn:aws:iam::415193271583:role/amplify-testtest-staging-121418-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::415193271583:role/amplify-testtest-staging-121418-authRole",
+      "Region": "eu-north-1",
+      "DeploymentBucketName": "amplify-testtest-staging-121418-deployment",
+      "UnauthRoleName": "amplify-testtest-staging-121418-unauthRole",
+      "StackName": "amplify-testtest-staging-121418",
+      "StackId": "arn:aws:cloudformation:eu-north-1:415193271583:stack/amplify-testtest-staging-121418/41242690-3682-11ed-be8c-0a834ccceb74",
+      "AmplifyAppId": "dvdtnblzorks2"
+    },
+    "categories": {
+      "auth": {
+        "testtest6de4b7ae": {
+          "userPoolId": "eu-north-1_kVdk8j1Jb",
+          "userPoolName": "CognitoTest",
+          "webClientId": "l6dgnt2p5p1ims830thldtige",
+          "nativeClientId": "l6dgnt2p5p1ims830thldtige"
+        },
+        "testtest": {}
+      }
+    }
+  }
+}

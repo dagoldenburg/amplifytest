@@ -1,0 +1,13 @@
+{
+    "AppSyncApiName": "testtest",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "S3DeploymentBucket": "amplify-testtest-staging-121418-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/5f3be6f647fa37501fece0bf18c4a7526b93c5c2"
+}

@@ -1,0 +1,290 @@
+
+type CarModel @aws_iam @aws_api_key {
+  id: ID!
+  name: String
+  activelysold: Boolean
+  carmakeID: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type CarMake @aws_iam @aws_api_key {
+  id: ID!
+  name: String
+  startyear: Int
+  CarModels(filter: ModelCarModelFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCarModelConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelCarModelConnection @aws_api_key @aws_iam {
+  items: [CarModel]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelCarModelFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  activelysold: ModelBooleanInput
+  carmakeID: ModelIDInput
+  and: [ModelCarModelFilterInput]
+  or: [ModelCarModelFilterInput]
+  not: ModelCarModelFilterInput
+}
+
+type Query {
+  getCarModel(id: ID!): CarModel @aws_api_key @aws_iam
+  listCarModels(filter: ModelCarModelFilterInput, limit: Int, nextToken: String): ModelCarModelConnection @aws_api_key @aws_iam
+  syncCarModels(filter: ModelCarModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCarModelConnection @aws_api_key @aws_iam
+  getCarMake(id: ID!): CarMake @aws_api_key @aws_iam
+  listCarMakes(filter: ModelCarMakeFilterInput, limit: Int, nextToken: String): ModelCarMakeConnection @aws_api_key @aws_iam
+  syncCarMakes(filter: ModelCarMakeFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCarMakeConnection @aws_api_key @aws_iam
+}
+
+input ModelCarModelConditionInput {
+  name: ModelStringInput
+  activelysold: ModelBooleanInput
+  carmakeID: ModelIDInput
+  and: [ModelCarModelConditionInput]
+  or: [ModelCarModelConditionInput]
+  not: ModelCarModelConditionInput
+}
+
+input CreateCarModelInput {
+  id: ID
+  name: String
+  activelysold: Boolean
+  carmakeID: ID!
+  _version: Int
+}
+
+input UpdateCarModelInput {
+  id: ID!
+  name: String
+  activelysold: Boolean
+  carmakeID: ID
+  _version: Int
+}
+
+input DeleteCarModelInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createCarModel(input: CreateCarModelInput!, condition: ModelCarModelConditionInput): CarModel @aws_api_key @aws_iam
+  updateCarModel(input: UpdateCarModelInput!, condition: ModelCarModelConditionInput): CarModel @aws_api_key @aws_iam
+  deleteCarModel(input: DeleteCarModelInput!, condition: ModelCarModelConditionInput): CarModel @aws_api_key @aws_iam
+  createCarMake(input: CreateCarMakeInput!, condition: ModelCarMakeConditionInput): CarMake @aws_api_key @aws_iam
+  updateCarMake(input: UpdateCarMakeInput!, condition: ModelCarMakeConditionInput): CarMake @aws_api_key @aws_iam
+  deleteCarMake(input: DeleteCarMakeInput!, condition: ModelCarMakeConditionInput): CarMake @aws_api_key @aws_iam
+}
+
+type Subscription {
+  onCreateCarModel: CarModel @aws_subscribe(mutations: ["createCarModel"]) @aws_api_key @aws_iam
+  onUpdateCarModel: CarModel @aws_subscribe(mutations: ["updateCarModel"]) @aws_api_key @aws_iam
+  onDeleteCarModel: CarModel @aws_subscribe(mutations: ["deleteCarModel"]) @aws_api_key @aws_iam
+  onCreateCarMake: CarMake @aws_subscribe(mutations: ["createCarMake"]) @aws_api_key @aws_iam
+  onUpdateCarMake: CarMake @aws_subscribe(mutations: ["updateCarMake"]) @aws_api_key @aws_iam
+  onDeleteCarMake: CarMake @aws_subscribe(mutations: ["deleteCarMake"]) @aws_api_key @aws_iam
+}
+
+type ModelCarMakeConnection @aws_api_key @aws_iam {
+  items: [CarMake]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelCarMakeFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  startyear: ModelIntInput
+  and: [ModelCarMakeFilterInput]
+  or: [ModelCarMakeFilterInput]
+  not: ModelCarMakeFilterInput
+}
+
+input ModelCarMakeConditionInput {
+  name: ModelStringInput
+  startyear: ModelIntInput
+  and: [ModelCarMakeConditionInput]
+  or: [ModelCarMakeConditionInput]
+  not: ModelCarMakeConditionInput
+}
+
+input CreateCarMakeInput {
+  id: ID
+  name: String
+  startyear: Int
+  _version: Int
+}
+
+input UpdateCarMakeInput {
+  id: ID!
+  name: String
+  startyear: Int
+  _version: Int
+}
+
+input DeleteCarMakeInput {
+  id: ID!
+  _version: Int
+}
+
